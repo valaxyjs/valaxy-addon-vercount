@@ -2,7 +2,7 @@
   "name": "valaxy-addon-vercount",
   "version": "0.0.5",
   "description": "A Vercount API based counting plugin for Valaxy, serving as an alternative to Busuanzi counting",
-  "repository": "https://github.com/YunYouJun/valaxy",
+  "repository": "https://github.com/valaxyjs/valaxy-addon-vercount",
   "keywords": [
     "valaxy",
     "addon",
