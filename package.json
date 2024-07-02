@@ -1,0 +1,18 @@
+{
+  "name": "valaxy-addon-vercount",
+  "version": "0.0.1",
+  "description": "A Vercount API based counting plugin for Valaxy, serving as an alternative to Busuanzi counting",
+  "repository": "https://github.com/YunYouJun/valaxy",
+  "keywords": [
+    "valaxy",
+    "addon",
+    "valaxy-addon",
+    "vercount",
+    "busuanzi"
+  ],
+  "main": "index.ts",
+  "types": "index.d.ts",
+  "scripts": {
+    "ci:publish": "npm publish --access public"
+  }
+}
