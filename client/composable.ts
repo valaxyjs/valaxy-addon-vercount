@@ -1,17 +1,22 @@
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { isClient } from '@vueuse/core'
 import type { Page, Site } from '../types'
 import { useAddonVercountConfig } from './options'
 
 export function useAddonVercount() {
   const vercountOptions = useAddonVercountConfig()
-  const router = useRouter()
-
-  const baseUrl = vercountOptions.value.baseUrl ?? window.location.origin
   const placeholder = vercountOptions.value.placeholder!
 
   const page = ref<Page>({ pv: placeholder, uv: placeholder })
   const site = ref<Site>({ pv: placeholder, uv: placeholder })
+
+  if (!isClient)
+    return { page, site }
+
+  const router = useRouter()
+
+  const baseUrl = vercountOptions.value.baseUrl ?? window.location.origin
 
   const defaultUrl = 'https://vercount.one/log?jsonpCallback=VisitorCountCallback'
   const cnUrl = 'https://cn.vercount.one/log?jsonpCallback=VisitorCountCallback'
