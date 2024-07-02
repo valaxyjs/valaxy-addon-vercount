@@ -8,7 +8,7 @@ export function useAddonVercount() {
   const router = useRouter()
 
   const baseUrl = vercountOptions.value.baseUrl ?? window.location.origin
-  const placeholder = vercountOptions.value.placeholder
+  const placeholder = vercountOptions.value.placeholder!
 
   const page = ref<Page>({ pv: placeholder, uv: placeholder })
   const site = ref<Site>({ pv: placeholder, uv: placeholder })
