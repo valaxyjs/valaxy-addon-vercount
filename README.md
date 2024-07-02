@@ -3,6 +3,10 @@
 A <a href="https://vercount.one/">Vercount</a> API based counting plugin for <a href="https://github.com/YunYouJun/valaxy">Valaxy</a>, serving as an alternative to Busuanzi counting
 </pre>
 
+<p align="center">
+<a href="https://www.npmjs.com/package/valaxy-addon-vercount" rel="nofollow"><img src="https://img.shields.io/npm/v/valaxy-addon-vercount?color=0078E7" alt="NPM version"></a>
+</p>
+
 - English | [简体中文](./README.zh-CN.md)
 
 ## Features

@@ -3,6 +3,10 @@
 基于 <a href="https://vercount.one/">Vercount</a> API 实现的 <a href="https://github.com/YunYouJun/valaxy">Valaxy</a> 计数插件, 用于不蒜子计数替代方案
 </pre>
 
+<p align="center">
+<a href="https://www.npmjs.com/package/valaxy-addon-vercount" rel="nofollow"><img src="https://img.shields.io/npm/v/valaxy-addon-vercount?color=0078E7" alt="NPM version"></a>
+</p>
+
 - [English](./README.md) | 简体中文
 
 ## 特性
