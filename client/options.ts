@@ -10,6 +10,7 @@ export function useAddonVercountConfig() {
 
     return {
       placeholder: '-',
+      baseUrl: window.location.origin,
       ...options,
     }
   })

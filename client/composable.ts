@@ -1,27 +1,29 @@
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { isClient } from '@vueuse/core'
 import type { Page, Site } from '../types'
+import { Oneline } from '../helpers/oneline'
 import { useAddonVercountConfig } from './options'
 
 export function useAddonVercount() {
   const vercountOptions = useAddonVercountConfig()
-  const placeholder = vercountOptions.value.placeholder!
+  const { placeholder, api, baseUrl } = vercountOptions.value
 
-  const page = ref<Page>({ pv: placeholder, uv: placeholder })
-  const site = ref<Site>({ pv: placeholder, uv: placeholder })
+  const page = ref<Page>({ pv: placeholder, uv: placeholder, online: placeholder })
+  const site = ref<Site>({ pv: placeholder, uv: placeholder, online: placeholder })
+
+  let pageOnelineInstance: Oneline
+  let siteOnelineInstance: Oneline
 
   if (!isClient)
     return { page, site }
 
   const router = useRouter()
 
-  const baseUrl = vercountOptions.value.baseUrl ?? window.location.origin
-
   const defaultUrl = 'https://vercount.one/log?jsonpCallback=VisitorCountCallback'
   const cnUrl = 'https://cn.vercount.one/log?jsonpCallback=VisitorCountCallback'
 
-  const url = vercountOptions.value.api === 'cn' ? cnUrl : vercountOptions.value.api || defaultUrl
+  const url = api === 'cn' ? cnUrl : api || defaultUrl
 
   const fetchVisitorCount = (href: string) => {
     fetch(url, {
@@ -46,17 +48,42 @@ export function useAddonVercount() {
       })
   }
 
+  const setupOnelineListener = (href: string) => {
+    pageOnelineInstance = new Oneline(href)
+    pageOnelineInstance.on('OnelineUpdate', (e) => {
+      page.value.online = e.detail.count
+    })
+
+    siteOnelineInstance = new Oneline(baseUrl!)
+    siteOnelineInstance.on('OnelineUpdate', (e) => {
+      site.value.online = e.detail.count
+    })
+  }
+
+  const removeOnelineListener = () => {
+    pageOnelineInstance?.destroy()
+    siteOnelineInstance?.destroy()
+  }
+
+  const handleVisitorCountAndListener = (href: string) => {
+    fetchVisitorCount(href)
+    setupOnelineListener(href)
+  }
+
   router.beforeEach((to) => {
     const completeUrl = baseUrl + to.fullPath
-    fetchVisitorCount(completeUrl)
+    removeOnelineListener()
+    handleVisitorCountAndListener(completeUrl)
   })
 
   onMounted(() => {
-    fetchVisitorCount(window.location.href)
+    const currentUrl = window.location.href
+    handleVisitorCountAndListener(currentUrl)
   })
 
-  return {
-    page,
-    site,
-  }
+  onUnmounted(() => {
+    removeOnelineListener()
+  })
+
+  return { page, site }
 }

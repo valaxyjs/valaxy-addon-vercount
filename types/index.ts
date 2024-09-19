@@ -1,7 +1,7 @@
 export interface VercountOptions {
   api?: string
   baseUrl?: string
-  placeholder?: string | number | null
+  placeholder?: string | number
 }
 
 export interface Page {
@@ -15,6 +15,11 @@ export interface Page {
    * @zh 独立访客数量
    */
   uv?: number | string
+  /**
+   * @en Online visitors on the page
+   * @zh 当前页面的在线人数
+   */
+  online?: number | string
 }
 
 export interface Site {
@@ -28,4 +33,9 @@ export interface Site {
    * @zh 独立访客数量
    */
   uv?: number | string
+  /**
+   * @en Online visitors on the site
+   * @zh 当前站点的在线人数
+   */
+  online?: number | string
 }

@@ -14,5 +14,8 @@
   "types": "index.d.ts",
   "scripts": {
     "ci:publish": "npm publish --access public"
+  },
+  "dependencies": {
+    "peerjs": "^1.5.4"
   }
 }
