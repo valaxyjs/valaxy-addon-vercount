@@ -1,7 +1,17 @@
-// https://github.com/ezshine/oneline.js
-
+/**
+ * -----------------------------------------------------------------------------
+ * A real-time website visit statistics tool using WebRTC and Peer.js.
+ * Modified from the original oneline.js.
+ * -----------------------------------------------------------------------------
+ *
+ * Source: https://github.com/ezshine/oneline.js
+ * License: MIT - see LICENSE for details.
+ *
+ * -----------------------------------------------------------------------------
+ */
 import type { DataConnection } from 'peerjs'
 import Peer from 'peerjs'
+import { v5 as uuidv5 } from 'uuid'
 
 export type EventCallback = (event: { detail: any }) => void
 
@@ -12,7 +22,8 @@ export class Oneline {
   #connections: Map<string, DataConnection> = new Map()
   #eventListeners: Record<string, EventCallback[]> = {}
 
-  constructor(peerId: string) {
+  constructor(url: string) {
+    const peerId = uuidv5(url, uuidv5.URL)
     this.init(peerId)
   }
 
@@ -47,10 +58,7 @@ export class Oneline {
       }
     })
 
-    window.addEventListener('beforeunload', () => {
-      this.#connections.forEach(conn => conn.close())
-      this.#peer?.destroy()
-    })
+    window.addEventListener('beforeunload', () => this.#cleanup())
   }
 
   on(eventName: string, callback: EventCallback): void {

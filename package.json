@@ -16,6 +16,10 @@
     "ci:publish": "npm publish --access public"
   },
   "dependencies": {
-    "peerjs": "^1.5.4"
+    "peerjs": "^1.5.4",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^10.0.0"
   }
 }

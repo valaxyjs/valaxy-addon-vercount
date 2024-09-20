@@ -72,7 +72,6 @@ export function useAddonVercount() {
 
   router.beforeEach((to) => {
     const completeUrl = baseUrl + to.fullPath
-    removeOnelineListener()
     handleVisitorCountAndListener(completeUrl)
   })
 
