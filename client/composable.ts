@@ -39,8 +39,8 @@ export function useAddonVercount() {
       navigator.userAgent,
       glInfo,
       new Date().getTimezoneOffset()
-    ].join('|');
-    let hash = 0;
+    ].join('|')
+    let hash = 0
     for (let i = 0; i < components.length; i++) {
       hash = ((hash << 5) - hash) + components.charCodeAt(i)
       hash = hash & hash
