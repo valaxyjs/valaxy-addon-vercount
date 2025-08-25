@@ -20,38 +20,15 @@ export function useAddonVercount() {
 
   const router = useRouter()
 
-  const defaultUrl = 'https://vercount.one/log?jsonpCallback=VisitorCountCallback'
-  const cnUrl = 'https://cn.vercount.one/log?jsonpCallback=VisitorCountCallback'
+  const defaultUrl = 'https://events.vercount.one/api/v2/log?jsonpCallback=VisitorCountCallback'
+  const cnUrl = 'https://cn.vercount.one/api/v2/log?jsonpCallback=VisitorCountCallback'
 
   const url = api === 'cn' ? cnUrl : api || defaultUrl
-
-  const generateBrowserToken = () => {
-    const screenInfo = `${window.screen.width}x${window.screen.height}x${window.screen.colorDepth}`
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''
-    const languages = navigator.languages ? navigator.languages.join(',') : navigator.language || ''
-    const canvas = document.createElement('canvas')
-    const gl = canvas.getContext('webgl')
-    const glInfo = gl ? gl.getParameter(gl.RENDERER) : ''
-    const components = [
-      screenInfo,
-      timeZone,
-      languages,
-      navigator.userAgent,
-      glInfo,
-      new Date().getTimezoneOffset()
-    ].join('|')
-    let hash = 0
-    for (let i = 0; i < components.length; i++) {
-      hash = ((hash << 5) - hash) + components.charCodeAt(i)
-      hash = hash & hash
-    }
-    return Math.abs(hash).toString(36)
-  }
 
   const fetchVisitorCount = (href: string) => {
     fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Browser-Token': generateBrowserToken() },
+      headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ url: href }),
     })
       .then((response) => {
@@ -60,7 +37,8 @@ export function useAddonVercount() {
 
         return response.json()
       })
-      .then((data) => {
+      .then((response) => {
+        const data = response.data
         page.value.pv = data.page_pv
         page.value.uv = data.page_uv
 
