@@ -39,15 +39,18 @@ export default defineValaxyConfig({
 ```vue
 <script lang="ts" setup>
 import { useAddonVercount } from 'valaxy-addon-vercount'
+import YunFooter from 'valaxy-theme-yun/components/YunFooter.vue'
 
 const { page, site } = useAddonVercount()
 </script>
 
 <template>
-  <span>Article reads: {{ page.pv }}</span>
-  <span>Article visitors: {{ page.uv }}</span>
-  <span>Site visits: {{ site.pv }}</span>
-  <span>Site visitors: {{ site.uv }}</span>
+    <YunFooter>
+      <span>Article reads: {{ page.pv }} 次</span>
+      <span>Article visitors: {{ page.uv }} 人</span>
+      <span>Site visits: {{ site.pv }}</span>
+      <span>Site visitors: {{ site.uv }}</span>
+    </YunFooter>
 </template>
 ```
 
